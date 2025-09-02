@@ -1,8 +1,3 @@
-/* While this template provides a good starting point for using Wear Compose, you can always
- * take a look at https://github.com/android/wear-os-samples/tree/main/ComposeStarter to find the
- * most up to date changes to the libraries and their usages.
- */
-
 package com.example.guardian.presentation
 
 import android.os.Bundle
@@ -24,15 +19,28 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import androidx.wear.tooling.preview.devices.WearDevices
 import com.example.guardian.R
+import com.example.guardian.logic.SensorManager
 import com.example.guardian.presentation.theme.GuardianTheme
 
 class MainActivity : ComponentActivity() {
+    private lateinit var sensorManager: SensorManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
 
         super.onCreate(savedInstanceState)
 
         setTheme(android.R.style.Theme_DeviceDefault)
+
+        sensorManager = SensorManager(this)
+        sensorManager.onHeartRateChanged = { heartRate ->
+            println("Received heart rate: $heartRate")
+            // TODO: add more sensor data and display it on the screen. 
+            // TODO: Keep reading in background too
+        }
+
+        requestPermissions(arrayOf(android.Manifest.permission.BODY_SENSORS), 0)
+        sensorManager.start()
 
         setContent {
             WearApp("Android")
