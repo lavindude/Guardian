@@ -35,8 +35,6 @@ class MainActivity : ComponentActivity() {
         sensorManager = SensorManager(this)
         sensorManager.onHeartRateChanged = { heartRate ->
             println("Received heart rate: $heartRate")
-            // TODO: add more sensor data and display it on the screen. 
-            // TODO: Keep reading in background too
         }
 
         requestPermissions(arrayOf(android.Manifest.permission.BODY_SENSORS), 0)
